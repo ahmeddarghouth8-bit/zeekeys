@@ -164,3 +164,17 @@ export async function createOrder(input: {
     return order
   }
 }
+
+export async function adminListOrders() {
+  if (!hasDb()) {
+    // Return in-memory orders (most recent first)
+    return mockOrders
+  }
+  try {
+    const prisma = getPrisma()
+    return await prisma.order.findMany({ orderBy: { createdAt: "desc" }, include: { items: true } })
+  } catch (err) {
+    console.warn("[DB] adminListOrders failed, falling back to mock:", err)
+    return mockOrders
+  }
+}
