@@ -6,7 +6,7 @@ Server-side totals:
 import "server-only"
 import { mockProducts } from "./mock-data"
 import { getPrisma } from "./prisma"
-import type { OrderStatus } from "@prisma/client"
+type OrderStatus = "PENDING" | "PAID" | "CANCELLED"
 import { applyDiscountCents, discountFor } from "./pricing"
 import { getVariantById } from "./variations"
 
