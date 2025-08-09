@@ -1,0 +1,183 @@
+// lib/mock-data.ts
+import { sampleProducts } from "./sample-products"
+
+export type MockProduct = {
+id: string
+slug: string
+title: string
+description: string
+priceCents: number
+imageUrl?: string
+active: boolean
+}
+
+const baseProducts: MockProduct[] = [
+{
+  id: "p1",
+  slug: "windows-11-pro-key",
+  title: "Windows 11 Pro Key",
+  description: "Genuine activation key for Windows 11 Pro. Instant delivery.",
+  priceCents: 2499,
+  // Provided image (Windows 11 Professional)
+  imageUrl: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/windows-11-pro_942f8d7e-ba96-46a1-8d53-c328235757d8-soMV0hfDd46OxXcUMxwu8AZQlmN7JR.webp",
+  active: true,
+},
+{
+  id: "p2",
+  slug: "psn-gift-card",
+  title: "PlayStation (PSN) Gift Card",
+  description: "Choose your denomination at checkout. Digital code delivered by email.",
+  priceCents: 1000,
+  // Provided PS Store card
+  imageUrl: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/11-113725_20-psn-card-transparent-hd-png-download%20%281%29-lrK18Y1n09NJFrK3zlPLMxyDTp46XO.png",
+  active: true,
+},
+{
+  id: "p3",
+  slug: "steam-gift-card",
+  title: "Steam Wallet Code",
+  description: "Choose your denomination at checkout. Digital code delivered by email.",
+  priceCents: 1000,
+  // Provided Steam cards image
+  imageUrl: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/steamcards_physical-IvAQmKn76WWTWsNeYo4Mxq5jIoUPD0.png",
+  active: true,
+},
+]
+
+// Map curated samples into mock products
+const extraMock = sampleProducts.map((p, i) => ({
+id: `px${i + 1}`,
+slug: p.slug,
+title: p.title,
+description: p.description,
+priceCents: p.priceCents,
+imageUrl: p.imageUrl,
+active: p.active,
+}))
+
+// De-duplicate by slug (remove duplicates of PSN Gift Card & Steam Wallet Code, etc.)
+const combined = [...baseProducts, ...extraMock]
+const seen = new Set<string>()
+export const mockProducts: MockProduct[] = combined.filter((p) => {
+if (seen.has(p.slug)) return false
+seen.add(p.slug)
+return true
+})
+
+// lib/sample-products.ts
+export type SampleProduct = {
+slug: string
+title: string
+description: string
+priceCents: number
+imageUrl?: string
+active: boolean
+}
+
+// Curated sample catalog
+export const sampleProducts: SampleProduct[] = [
+{
+  slug: "windows-10-pro-key",
+  title: "Windows 10 Pro Key",
+  description: "Genuine activation key for Windows 10 Pro. Instant delivery to your email.",
+  priceCents: 1499,
+  imageUrl: "/windows-10-pro-digital-license.png",
+  active: true,
+},
+{
+  slug: "windows-11-home-key",
+  title: "Windows 11 Home Key",
+  description: "Official Windows 11 Home key. Fast email delivery.",
+  priceCents: 1999,
+  // Provided Windows 11 Home artwork
+  imageUrl: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/windows_11_home_key_code_serial__13277.jpg-SR5NT7pXaLbxpjLFtkGNb6ohLUobcu.jpeg",
+  active: true,
+},
+{
+  slug: "office-365-personal-12-months",
+  title: "Microsoft 365 Personal (12 Months)",
+  description: "12-month subscription for 1 user. Includes Word, Excel, PowerPoint, Outlook.",
+  priceCents: 3999,
+  imageUrl: "/microsoft-365-personal.png",
+  active: true,
+},
+{
+  slug: "nordvpn-1-year",
+  title: "NordVPN 1 Year",
+  description: "Stay private online with a 12-month NordVPN subscription.",
+  priceCents: 5999,
+  // Provided NordVPN card image
+  imageUrl: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/71E7jCmcdML._AC_SX679_.jpg-5Ojrh9eFQSF9pRMZoBLSHmlbSZSRHf.jpeg",
+  active: true,
+},
+// Steam Gift Card (duplicate slug with base; kept here as well, but base wins via dedupe)
+{
+  slug: "steam-gift-card",
+  title: "Steam Wallet Code",
+  description: "Choose your denomination at checkout. Digital code delivered by email.",
+  priceCents: 1000,
+  // Provided Steam cards image
+  imageUrl: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/steamcards_physical-IvAQmKn76WWTWsNeYo4Mxq5jIoUPD0.png",
+  active: true,
+},
+// PSN Gift Card (duplicate slug with base; base wins via dedupe)
+{
+  slug: "psn-gift-card",
+  title: "PlayStation (PSN) Gift Card",
+  description: "Choose your denomination at checkout. Digital code delivered by email.",
+  priceCents: 1000,
+  // Provided PS Store card image
+  imageUrl: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/11-113725_20-psn-card-transparent-hd-png-download%20%281%29-lrK18Y1n09NJFrK3zlPLMxyDTp46XO.png",
+  active: true,
+},
+{
+  slug: "nintendo-eshop-gift-card-50",
+  title: "Nintendo eShop Gift Card $50",
+  description: "Buy games and DLC on the Nintendo eShop with a $50 card.",
+  priceCents: 4999,
+  imageUrl: "/placeholder-ywxsv.png",
+  active: true,
+},
+{
+  slug: "playstation-plus-12-months",
+  title: "PlayStation Plus Essential",
+  description: "Online multiplayer, monthly games, and exclusive discounts.",
+  // Provided PlayStation Plus image (from previous step)
+  imageUrl: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/c16cf1967581d51e61c622cd60a570de_large%20%281%29%20%281%29%20%281%29-2XgtkXCsdVDXReTnrb5SMnSqKE5VKK.png",
+  priceCents: 5999,
+  active: true,
+},
+{
+  slug: "ea-sports-fc-25",
+  title: "EA SPORTS FC 25",
+  description: "Choose platform (PC, PS5, Xbox). Digital key after verification.",
+  priceCents: 2999,
+  imageUrl: "/ea-sports-fc-24-digital-key.png",
+  active: true,
+},
+{
+  slug: "gta-v-premium-edition",
+  title: "GTA V Premium Edition",
+  description: "Choose platform (PC, PS5, Xbox). Explore Los Santos with bonus content.",
+  priceCents: 1899,
+  imageUrl: "/placeholder.svg?height=800&width=1200",
+  active: true,
+},
+{
+  slug: "minecraft-java-edition-pc",
+  title: "Minecraft: Java Edition (PC)",
+  description: "Build, explore, and survive in Minecraft: Java Edition.",
+  // Provided Minecraft gift card image
+  imageUrl: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Minecraft-Java-Bedrock-PC-Game-Gift-Card-Physical_6e284ab8-7c97-40f1-94e0-4220323c07ad.ae55f6aa62ba61f613790f9af66bd5df-5VSDMYuaHmtJUlCIjUz64qEh1PZwgO.webp",
+  priceCents: 2699,
+  active: true,
+},
+{
+  slug: "adobe-creative-cloud-1-month",
+  title: "Adobe Creative Cloud (1 Month)",
+  description: "All Creative Cloud apps for one month. Activation code by email.",
+  priceCents: 5299,
+  imageUrl: "/placeholder.svg?height=800&width=1200",
+  active: true,
+},
+]
